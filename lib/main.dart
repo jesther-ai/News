@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'News App',
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+        ),
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

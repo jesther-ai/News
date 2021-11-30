@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<News>(context, listen: false).load();
+    Provider.of<News>(context, listen: false).load('latest');
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -59,39 +59,45 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            Consumer<News>(
-              builder: (context, value, child) {
-                return Flexible(
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 50),
-                    child: value.isLoaded
-                        ? CarouselSlider.builder(
-                            options: CarouselOptions(
-                              // initialPage:
-                              //     (value.articles.length * 0.50).toInt(),
-                              enlargeCenterPage: true,
-                              height: size.height,
-                              scrollDirection: Axis.horizontal,
-                            ),
-                            itemCount: value.articles.length,
-                            itemBuilder: (context, index, currentIndex) {
-                              return NewsCard(
-                                title: value.articles[index]['title'] ??= '',
-                                description: value.articles[index]
-                                    ['description'] ??= '',
-                                imageSource: value.articles[index]
-                                    ['urlToImage'],
-                              );
-                            },
-                          )
-                        : Center(
-                            child: CircularProgressIndicator.adaptive(
-                              backgroundColor: HexColor('#666666'),
-                            ),
-                          ),
-                  ),
-                );
-              },
+            Flexible(
+              child: Consumer<News>(
+                builder: (context, value, child) {
+                  return AnimatedCrossFade(
+                    crossFadeState: value.isLoadedBool
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    duration: const Duration(milliseconds: 200),
+                    firstChild: Container(
+                      margin: const EdgeInsets.only(bottom: 10, top: 10),
+                      child: CarouselSlider.builder(
+                        options: CarouselOptions(
+                          enlargeCenterPage: true,
+                          height: size.height,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                        itemCount: value.data.length,
+                        itemBuilder: (context, index, currentIndex) {
+                          return NewsCard(
+                            title: value.data[index]['title'] ??= '',
+                            description: value.data[index]['description'] ??=
+                                '',
+                            imageSource: value.data[index]['urlToImage'] ??=
+                                'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
+                          );
+                        },
+                      ),
+                    ),
+                    secondChild: const SizedBox(
+                      height: 15,
+                      width: 15,
+                      child: CircularProgressIndicator(
+                        color: Colors.grey,
+                        strokeWidth: 3,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

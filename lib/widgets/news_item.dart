@@ -14,21 +14,27 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+      padding: const EdgeInsets.fromLTRB(3, 3, 3, 0),
+      decoration: BoxDecoration(
+        color: HexColor('#226FCC'),
+        borderRadius: BorderRadius.circular(25),
+      ),
       child: Column(
         children: [
           SizedBox(
-            height: 480,
+            height: 200,
+            width: double.infinity,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(35),
+              borderRadius: BorderRadius.circular(25),
               child: Image.network(imageSource, fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 15),
           Text(
             title,
-            maxLines: 2,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
@@ -41,7 +47,8 @@ class NewsCard extends StatelessWidget {
           Text(
             description,
             overflow: TextOverflow.ellipsis,
-            maxLines: 3,
+            textAlign: TextAlign.left,
+            maxLines: 10,
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w400,
