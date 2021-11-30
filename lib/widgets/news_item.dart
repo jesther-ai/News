@@ -4,15 +4,16 @@ import 'package:news_app/Utilities/hex_color.dart';
 class NewsCard extends StatelessWidget {
   const NewsCard({
     required this.title,
+    required this.description,
     required this.imageSource,
     Key? key,
   }) : super(key: key);
   final String title;
+  final String description;
   final String imageSource;
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
       padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
       child: Column(
         children: [
@@ -23,14 +24,30 @@ class NewsCard extends StatelessWidget {
               child: Image.network(imageSource, fit: BoxFit.cover),
             ),
           ),
+          const SizedBox(height: 15),
           Text(
             title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontFamily: 'Roboto',
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w700,
               fontStyle: FontStyle.normal,
-              fontSize: 14,
-              color: HexColor('#FFFFFF'),
+              fontSize: 20,
+              color: HexColor('#000000'),
+            ),
+          ),
+          const SizedBox(height: 15),
+          Text(
+            description,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.normal,
+              fontSize: 16,
+              color: HexColor('#000000'),
             ),
           ),
         ],

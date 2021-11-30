@@ -64,11 +64,11 @@ class Home extends StatelessWidget {
                 return Flexible(
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 50),
-                    color: Colors.white,
                     child: value.isLoaded
                         ? CarouselSlider.builder(
                             options: CarouselOptions(
-                              initialPage: 3,
+                              // initialPage:
+                              //     (value.articles.length * 0.50).toInt(),
                               enlargeCenterPage: true,
                               height: size.height,
                               scrollDirection: Axis.horizontal,
@@ -76,8 +76,9 @@ class Home extends StatelessWidget {
                             itemCount: value.articles.length,
                             itemBuilder: (context, index, currentIndex) {
                               return NewsCard(
-                                title: value.articles[index]['description'] ??=
-                                    '',
+                                title: value.articles[index]['title'] ??= '',
+                                description: value.articles[index]
+                                    ['description'] ??= '',
                                 imageSource: value.articles[index]
                                     ['urlToImage'],
                               );
