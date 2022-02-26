@@ -54,9 +54,17 @@ class NewsSliverAppBar extends StatelessWidget {
                               alignment: Alignment.bottomLeft,
                               children: [
                                 Container(
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: HexColor('#8855d7'),
+                                        spreadRadius: 50,
+                                        blurRadius: 150,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(65),
                                     ),
                                   ),
