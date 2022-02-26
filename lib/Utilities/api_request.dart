@@ -6,11 +6,17 @@ import 'package:flutter/foundation.dart';
 import 'package:news_app/Utilities/app_config.dart';
 
 class API {
-  Future<Map<String, dynamic>> request(Map<String, dynamic> parameter) async {
-    debugPrint('API REQUEST: $parameter');
+  Future<Map<String, dynamic>> request(String searchKey) async {
+    debugPrint('API REQUEST: $searchKey');
     http.Response response;
     try {
-      response = await http.get(Uri(host: AppConfig.endPoint)).timeout(const Duration(seconds: 3));
+      response = await http
+          .get(
+            Uri.parse(
+              '${AppConfig.endPoint}everything?q=${searchKey}&sortBy=popularity&apiKey=${AppConfig.defaultKey}',
+            ),
+          )
+          .timeout(const Duration(seconds: 3));
       if (response.statusCode == 200 && response.body.isNotEmpty) {
         debugPrint('API RESPONSE: ${(response.body.toString())}');
         Map<String, dynamic> data = jsonDecode(response.body);

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:news_app/Utilities/hex_color.dart';
+import 'package:news_app/providers/news_data.dart';
 import 'package:news_app/widgets/category_news_card.dart';
 import 'package:news_app/widgets/news_list_card.dart';
 import 'package:news_app/widgets/time_of_news_card.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({
@@ -12,6 +14,7 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initState(context);
     return AnimationLimiter(
       child: Container(
         color: HexColor('#f8f6fc'),
@@ -82,5 +85,12 @@ class HomeTab extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  initState(BuildContext context) {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      News news = Provider.of<News>(context, listen: false);
+      if (!news.isLoaded) news.load('bitcoin');
+    });
   }
 }

@@ -52,7 +52,7 @@ class HomeFooter extends StatelessWidget {
           tabs: const [
             Tab(child: Text('Account'), icon: Icon(Icons.person_outline)),
             Tab(child: Text('Hot'), icon: Icon(Icons.trending_up)),
-            Tab(child: Text('List'), icon: Icon(Icons.menu)),
+            Tab(child: Text('Search'), icon: Icon(Icons.search_rounded)),
             Tab(child: Text('Favorites'), icon: Icon(Icons.favorite_border_rounded)),
           ],
         ),
