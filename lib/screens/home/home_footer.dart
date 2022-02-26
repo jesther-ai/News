@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Utilities/hex_color.dart';
+import 'package:news_app/providers/selected_tab.dart';
+import 'package:provider/provider.dart';
 
 class HomeFooter extends StatelessWidget {
   const HomeFooter({
@@ -28,6 +30,7 @@ class HomeFooter extends StatelessWidget {
       height: 110,
       child: Center(
         child: TabBar(
+          onTap: (value) => Provider.of<SelectedTab>(context, listen: false).setTabIndex(value),
           indicatorSize: TabBarIndicatorSize.label,
           padding: const EdgeInsets.only(left: 20, right: 20),
           labelPadding: const EdgeInsets.only(left: 20, right: 20),
@@ -51,7 +54,7 @@ class HomeFooter extends StatelessWidget {
           isScrollable: true,
           tabs: const [
             Tab(child: Text('Account'), icon: Icon(Icons.person_outline)),
-            Tab(child: Text('Hot'), icon: Icon(Icons.trending_up)),
+            Tab(child: Text('Trending'), icon: Icon(Icons.trending_up)),
             Tab(child: Text('Search'), icon: Icon(Icons.search_rounded)),
             Tab(child: Text('Favorites'), icon: Icon(Icons.favorite_border_rounded)),
           ],

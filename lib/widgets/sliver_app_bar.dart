@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:news_app/Utilities/hex_color.dart';
 import 'package:news_app/providers/news_data.dart';
+import 'package:news_app/providers/selected_tab.dart';
 import 'package:news_app/widgets/favorite_button.dart';
 import 'package:provider/provider.dart';
 
@@ -37,13 +39,13 @@ class NewsSliverAppBar extends StatelessWidget {
               child: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
-                    Consumer<News>(builder: (context, value, child) {
+                    Consumer2<News, SelectedTab>(builder: (context, value, selectedTab, child) {
                       return SliverAppBar(
                         elevation: 0,
                         expandedHeight: screenSize.height * 0.35,
                         floating: false,
                         pinned: true,
-                        title: innerBoxIsScrolled ? Text(value.searchString) : const SizedBox(),
+                        title: innerBoxIsScrolled ? Center(child: Text(value.searchString)) : const SizedBox(),
                         flexibleSpace: LayoutBuilder(
                           builder: (BuildContext context, BoxConstraints constraints) {
                             top = constraints.biggest.height;
@@ -77,43 +79,71 @@ class NewsSliverAppBar extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 20, right: 20),
                                     height: (top == navBarHeight) ? 0 : 45,
                                   ),
-                                  top != navBarHeight
+                                  selectedTab.tabIndex != 2 && top != navBarHeight
                                       ? Positioned(
                                           right: 20,
                                           bottom: 35,
-                                          child: FavoriteButton(
-                                            iconData: Icons.favorite_border_rounded,
-                                            iconColor: HexColor('#8855d7'),
-                                            buttonColor: Colors.white,
+                                          child: AnimationConfiguration.staggeredList(
+                                            position: 0,
+                                            duration: const Duration(milliseconds: 1000),
+                                            child: FadeInAnimation(
+                                              child: SlideAnimation(
+                                                verticalOffset: 100,
+                                                child: FavoriteButton(
+                                                  iconData: Icons.favorite_border_rounded,
+                                                  iconColor: HexColor('#8855d7'),
+                                                  buttonColor: Colors.white,
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         )
                                       : const SizedBox(),
-                                  top != navBarHeight
+                                  selectedTab.tabIndex != 2 && top != navBarHeight
                                       ? Positioned(
                                           right: 55,
                                           bottom: 35,
-                                          child: FavoriteButton(
-                                            iconData: Icons.bookmark_border,
-                                            iconColor: Colors.white,
-                                            buttonColor: HexColor('#8855d7'),
+                                          child: AnimationConfiguration.staggeredList(
+                                            position: 0,
+                                            duration: const Duration(milliseconds: 1000),
+                                            child: FadeInAnimation(
+                                              child: SlideAnimation(
+                                                verticalOffset: 100,
+                                                child: FavoriteButton(
+                                                  iconData: Icons.bookmark_border,
+                                                  iconColor: Colors.white,
+                                                  buttonColor: HexColor('#8855d7'),
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         )
                                       : const SizedBox(),
-                                  top != navBarHeight
+                                  selectedTab.tabIndex != 2 && top != navBarHeight
                                       ? Positioned(
                                           left: 10,
-                                          bottom: 0,
-                                          child: SizedBox(
-                                            width: screenSize.width * 0.60,
-                                            child: Text(
-                                              value.data.isEmpty ? '' : value.data[0]['title'],
-                                              maxLines: 2,
-                                              style: const TextStyle(
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.w700,
-                                                fontStyle: FontStyle.normal,
-                                                fontSize: 15,
-                                                color: Colors.black,
+                                          bottom: 10,
+                                          child: AnimationConfiguration.staggeredList(
+                                            position: 0,
+                                            duration: const Duration(milliseconds: 1000),
+                                            child: FadeInAnimation(
+                                              child: SlideAnimation(
+                                                verticalOffset: 100,
+                                                child: SizedBox(
+                                                  width: screenSize.width * 0.60,
+                                                  child: Text(
+                                                    value.data.isEmpty ? 'Fetching...' : value.data[0]['title'],
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      fontWeight: FontWeight.w700,
+                                                      fontStyle: FontStyle.normal,
+                                                      fontSize: 15,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),

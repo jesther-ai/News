@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/providers/news_data.dart';
+import 'package:news_app/providers/selected_tab.dart';
 import 'package:news_app/screens/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -13,9 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<News>(
-          create: (context) => News(),
-        ),
+        ChangeNotifierProvider<News>(create: (context) => News()),
+        ChangeNotifierProvider<SelectedTab>(create: (context) => SelectedTab()),
       ],
       child: MaterialApp(
         darkTheme: ThemeData.light(),

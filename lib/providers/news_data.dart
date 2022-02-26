@@ -12,7 +12,7 @@ class News with ChangeNotifier {
   String get searchString => _searchString;
 
   load(String searchString) {
-    _isLoaded = false;
+    reset();
     _searchString = searchString;
     notifyListeners();
     API().request(searchString).then((value) {
@@ -20,12 +20,12 @@ class News with ChangeNotifier {
         _isLoaded = true;
         _articles = value['articles'];
         notifyListeners();
-        print(value);
       }
     });
   }
 
   reset() {
+    _articles.clear();
     _isLoaded = false;
     notifyListeners();
   }

@@ -15,7 +15,9 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initState(context);
-    return AnimationLimiter(
+    return RefreshIndicator(
+      onRefresh: () => Future.delayed(const Duration(milliseconds: 100), () => onRefresh(context)),
+      color: HexColor('#8855d7'),
       child: Container(
         color: HexColor('#f8f6fc'),
         padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -27,42 +29,67 @@ class HomeTab extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            CategoryNews(categoryName: value.data[0]['source']['name']),
-                            const SizedBox(width: 10),
-                            TimeOfNews(timeAndDate: value.data[0]['publishedAt']),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          value.data[0]['description'],
-                          style: const TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Related News',
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 30,
-                            color: Colors.black,
+                        AnimationConfiguration.staggeredList(
+                          position: 0,
+                          duration: const Duration(milliseconds: 1000),
+                          child: FadeInAnimation(
+                            child: SlideAnimation(
+                              verticalOffset: 100,
+                              child: Row(
+                                children: [
+                                  CategoryNews(categoryName: value.data[0]['source']['name']),
+                                  const SizedBox(width: 10),
+                                  TimeOfNews(timeAndDate: value.data[0]['publishedAt']),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
                         AnimationConfiguration.staggeredList(
                           position: 0,
-                          duration: const Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 1000),
                           child: FadeInAnimation(
                             child: SlideAnimation(
                               verticalOffset: 100,
+                              child: Text(
+                                value.data[0]['description'],
+                                style: const TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const AnimationConfiguration.staggeredList(
+                          position: 1,
+                          duration: Duration(milliseconds: 1000),
+                          child: FadeInAnimation(
+                            child: SlideAnimation(
+                              child: Text(
+                                'Related News',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w700,
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        AnimationConfiguration.staggeredList(
+                          position: 1,
+                          duration: const Duration(milliseconds: 1000),
+                          child: FadeInAnimation(
+                            child: SlideAnimation(
                               child: ListView(
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.all(5),
@@ -75,7 +102,7 @@ class HomeTab extends StatelessWidget {
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return NewsListCard(
-                                        image: value.data[index + 1]['urlToImage'],
+                                        image: value.data[index + 1]['urlToImage'] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png',
                                         title: value.data[index + 1]['title'],
                                         categoryName: value.data[index + 1]['source']['name'],
                                         timeAndDate: value.data[index + 1]['publishedAt'],
@@ -90,13 +117,17 @@ class HomeTab extends StatelessWidget {
                         ),
                       ],
                     )
-                  : Center(
-                      child: SizedBox(
-                        width: 25,
-                        height: 25,
-                        child: CircularProgressIndicator(
-                          color: HexColor('#FF715B'),
-                          strokeWidth: 2.5,
+                  : Container(
+                      color: HexColor('#f8f6fc'),
+                      height: 450,
+                      child: Center(
+                        child: SizedBox(
+                          width: 25,
+                          height: 25,
+                          child: CircularProgressIndicator(
+                            color: HexColor('#8855d7'),
+                            strokeWidth: 2.5,
+                          ),
                         ),
                       ),
                     );
@@ -110,7 +141,12 @@ class HomeTab extends StatelessWidget {
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 500), () {
       News news = Provider.of<News>(context, listen: false);
-      if (!news.isLoaded) news.load('Crypto');
+      if (!news.isLoaded) news.load('NFT');
     });
+  }
+
+  onRefresh(context) {
+    News news = Provider.of<News>(context, listen: false);
+    news.load(news.searchString);
   }
 }
