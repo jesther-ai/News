@@ -37,7 +37,7 @@ class NewsSliverAppBar extends StatelessWidget {
                   return <Widget>[
                     SliverAppBar(
                       elevation: 0,
-                      expandedHeight: screenSize.height * 0.45,
+                      expandedHeight: screenSize.height * 0.35,
                       floating: false,
                       pinned: true,
                       flexibleSpace: LayoutBuilder(
@@ -65,7 +65,7 @@ class NewsSliverAppBar extends StatelessWidget {
                                               offset: const Offset(0, 2),
                                             ),
                                           ],
-                                    color: Colors.white,
+                                    color: HexColor('#f8f6fc'),
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(65),
                                     ),
@@ -73,32 +73,32 @@ class NewsSliverAppBar extends StatelessWidget {
                                   padding: const EdgeInsets.only(left: 20, right: 20),
                                   height: (top == navBarHeight) ? 0 : 45,
                                 ),
-                                // top != navBarHeight
-                                //     ? Positioned(
-                                //         right: 20,
-                                //         bottom: 35,
-                                //         child: FavoriteButton(
-                                //           iconData: Icons.favorite_border_rounded,
-                                //           iconColor: HexColor('#8855d7'),
-                                //           buttonColor: Colors.white,
-                                //         ),
-                                //       )
-                                //     : const SizedBox(),
-                                // top != navBarHeight
-                                //     ? Positioned(
-                                //         right: 55,
-                                //         bottom: 35,
-                                //         child: FavoriteButton(
-                                //           iconData: Icons.bookmark_border,
-                                //           iconColor: Colors.white,
-                                //           buttonColor: HexColor('#8855d7'),
-                                //         ),
-                                //       )
-                                //     : const SizedBox(),
+                                top != navBarHeight
+                                    ? Positioned(
+                                        right: 20,
+                                        bottom: 35,
+                                        child: FavoriteButton(
+                                          iconData: Icons.favorite_border_rounded,
+                                          iconColor: HexColor('#8855d7'),
+                                          buttonColor: Colors.white,
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                top != navBarHeight
+                                    ? Positioned(
+                                        right: 55,
+                                        bottom: 35,
+                                        child: FavoriteButton(
+                                          iconData: Icons.bookmark_border,
+                                          iconColor: Colors.white,
+                                          buttonColor: HexColor('#8855d7'),
+                                        ),
+                                      )
+                                    : const SizedBox(),
                                 top != navBarHeight
                                     ? Positioned(
                                         left: 10,
-                                        bottom: 5,
+                                        bottom: 0,
                                         child: SizedBox(
                                           width: screenSize.width * 0.60,
                                           child: const Text(
@@ -118,10 +118,10 @@ class NewsSliverAppBar extends StatelessWidget {
                               ],
                             ),
                             background: Hero(
-                              tag: 'https://ichef.bbci.co.uk/news/1024/branded_news/17EC7/production/_123419979_coalplantgettyimages-948004144.jpg'!,
+                              tag: 'https://ichef.bbci.co.uk/news/1024/branded_news/17EC7/production/_123419979_coalplantgettyimages-948004144.jpg',
                               transitionOnUserGestures: true,
                               child: Image.network(
-                                'https://ichef.bbci.co.uk/news/1024/branded_news/17EC7/production/_123419979_coalplantgettyimages-948004144.jpg'!,
+                                'https://ichef.bbci.co.uk/news/1024/branded_news/17EC7/production/_123419979_coalplantgettyimages-948004144.jpg',
                                 fit: BoxFit.cover,
                               ),
                             ),
