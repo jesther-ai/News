@@ -16,7 +16,7 @@ class CategoryNews extends StatelessWidget {
         ),
       ),
       height: 25,
-      width: 100,
+      width: 120,
       child: Center(
         child: Text(
           categoryName,
@@ -25,7 +25,7 @@ class CategoryNews extends StatelessWidget {
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.normal,
-            fontSize: 15,
+            fontSize: 14,
             color: Colors.black,
           ),
         ),

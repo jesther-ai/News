@@ -5,9 +5,16 @@ import 'package:news_app/widgets/time_of_news_card.dart';
 
 class NewsListCard extends StatelessWidget {
   const NewsListCard({
+    required this.image,
+    required this.title,
+    required this.categoryName,
+    required this.timeAndDate,
     Key? key,
   }) : super(key: key);
-
+  final String title;
+  final String categoryName;
+  final String timeAndDate;
+  final String image;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +43,7 @@ class NewsListCard extends StatelessWidget {
                 width: 110,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(topRight: Radius.circular(60)),
-                  color: Colors.transparent,
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
                       color: HexColor('#8855d7'),
@@ -49,11 +56,17 @@ class NewsListCard extends StatelessWidget {
               ),
               ClipRRect(
                 borderRadius: const BorderRadius.only(topRight: Radius.circular(60)),
-                child: Image.network(
-                  'https://www.presse-citron.net/app/uploads/2021/12/Block-Square-Fintech.jpg',
+                child: FadeInImage.assetNetwork(
+                  fadeInCurve: Curves.easeInQuart,
+                  fadeOutCurve: Curves.easeInQuart,
+                  fadeOutDuration: const Duration(milliseconds: 1000),
+                  fadeInDuration: const Duration(milliseconds: 200),
                   fit: BoxFit.cover,
                   width: 110,
                   height: 150,
+                  placeholderFit: BoxFit.cover,
+                  placeholder: 'assets/images/loader1.gif',
+                  image: image,
                 ),
               ),
             ],
@@ -63,13 +76,13 @@ class NewsListCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Flexible(
                   child: Text(
-                    'Pierre Noizat, Paymium : « Le Bitcoin est bon pour l’environnement »',
+                    title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.normal,
@@ -78,10 +91,10 @@ class NewsListCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                CategoryNews(categoryName: 'BBC News'),
-                SizedBox(height: 10),
-                TimeOfNews(timeAndDate: '10:40AM - September 20, 2022'),
+                const SizedBox(height: 10),
+                CategoryNews(categoryName: categoryName),
+                const SizedBox(height: 10),
+                TimeOfNews(timeAndDate: timeAndDate),
               ],
             ),
           ),

@@ -20,67 +20,87 @@ class HomeTab extends StatelessWidget {
         color: HexColor('#f8f6fc'),
         padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Row(
-                children: const [
-                  CategoryNews(categoryName: 'BBC News'),
-                  SizedBox(width: 10),
-                  TimeOfNews(timeAndDate: '10:40AM - September 20, 2022'),
-                ],
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Image source, Getty Images\r\nBitcoin has become less green since China cracked down on mining the cryptocurrency, new research suggests.\r\nMining refers to the process of creating new bitcoins using ba…',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w500,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Hot News',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 30,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 20),
-              AnimationConfiguration.staggeredList(
-                position: 0,
-                duration: const Duration(milliseconds: 500),
-                child: FadeInAnimation(
-                  child: SlideAnimation(
-                    verticalOffset: 100,
-                    child: ListView(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(5),
-                      physics: const NeverScrollableScrollPhysics(),
+          child: Consumer<News>(
+            builder: (context, value, child) {
+              return value.isLoaded
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ListView.builder(
-                          padding: const EdgeInsets.all(0),
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 10,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return const NewsListCard();
-                          },
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            CategoryNews(categoryName: value.data[0]['source']['name']),
+                            const SizedBox(width: 10),
+                            TimeOfNews(timeAndDate: value.data[0]['publishedAt']),
+                          ],
                         ),
-                        const SizedBox(height: 120),
+                        const SizedBox(height: 20),
+                        Text(
+                          value.data[0]['description'],
+                          style: const TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Related News',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 30,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        AnimationConfiguration.staggeredList(
+                          position: 0,
+                          duration: const Duration(milliseconds: 500),
+                          child: FadeInAnimation(
+                            child: SlideAnimation(
+                              verticalOffset: 100,
+                              child: ListView(
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.all(5),
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: [
+                                  ListView.builder(
+                                    padding: const EdgeInsets.all(0),
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: value.data.length - 1,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return NewsListCard(
+                                        image: value.data[index + 1]['urlToImage'],
+                                        title: value.data[index + 1]['title'],
+                                        categoryName: value.data[index + 1]['source']['name'],
+                                        timeAndDate: value.data[index + 1]['publishedAt'],
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(height: 120),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+                    )
+                  : Center(
+                      child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: CircularProgressIndicator(
+                          color: HexColor('#FF715B'),
+                          strokeWidth: 2.5,
+                        ),
+                      ),
+                    );
+            },
           ),
         ),
       ),
@@ -90,7 +110,7 @@ class HomeTab extends StatelessWidget {
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 500), () {
       News news = Provider.of<News>(context, listen: false);
-      if (!news.isLoaded) news.load('bitcoin');
+      if (!news.isLoaded) news.load('Ukraine');
     });
   }
 }
