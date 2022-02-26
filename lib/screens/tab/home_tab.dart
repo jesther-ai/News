@@ -24,7 +24,7 @@ class HomeTab extends StatelessWidget {
         child: SingleChildScrollView(
           child: Consumer<News>(
             builder: (context, value, child) {
-              return value.isLoaded
+              return value.isLoadedTrending
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -37,9 +37,9 @@ class HomeTab extends StatelessWidget {
                               verticalOffset: 100,
                               child: Row(
                                 children: [
-                                  CategoryNews(categoryName: value.data[0]['source']['name']),
+                                  CategoryNews(categoryName: value.trendingArticles[0]['source']['name']),
                                   const SizedBox(width: 10),
-                                  TimeOfNews(timeAndDate: value.data[0]['publishedAt']),
+                                  TimeOfNews(timeAndDate: value.trendingArticles[0]['publishedAt']),
                                 ],
                               ),
                             ),
@@ -53,7 +53,7 @@ class HomeTab extends StatelessWidget {
                             child: SlideAnimation(
                               verticalOffset: 100,
                               child: Text(
-                                value.data[0]['description'],
+                                value.trendingArticles[0]['description'],
                                 style: const TextStyle(
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w500,
@@ -98,14 +98,14 @@ class HomeTab extends StatelessWidget {
                                   ListView.builder(
                                     padding: const EdgeInsets.all(0),
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: value.data.length - 1,
+                                    itemCount: value.trendingArticles.length - 1,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return NewsListCard(
-                                        image: value.data[index + 1]['urlToImage'] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png',
-                                        title: value.data[index + 1]['title'],
-                                        categoryName: value.data[index + 1]['source']['name'],
-                                        timeAndDate: value.data[index + 1]['publishedAt'],
+                                        image: value.trendingArticles[index + 1]['urlToImage'] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png',
+                                        title: value.trendingArticles[index + 1]['title'],
+                                        categoryName: value.trendingArticles[index + 1]['source']['name'],
+                                        timeAndDate: value.trendingArticles[index + 1]['publishedAt'],
                                       );
                                     },
                                   ),
@@ -141,12 +141,12 @@ class HomeTab extends StatelessWidget {
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 500), () {
       News news = Provider.of<News>(context, listen: false);
-      if (!news.isLoaded) news.load('NFT');
+      if (!news.isLoadedTrending) news.loadTrending();
     });
   }
 
   onRefresh(context) {
     News news = Provider.of<News>(context, listen: false);
-    news.load(news.searchString);
+    news.loadTrending();
   }
 }

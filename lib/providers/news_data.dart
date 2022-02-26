@@ -4,29 +4,50 @@ import 'package:news_app/Utilities/api_request.dart';
 
 class News with ChangeNotifier {
   String _searchString = 'News';
-  List<dynamic> _articles = [];
-  bool _isLoaded = false;
-
-  List get data => [..._articles];
-  bool get isLoaded => _isLoaded;
+  List<dynamic> _searchResult = [];
+  List<dynamic> _trendingArticles = [];
+  bool _isLoadedTrending = false;
+  bool _isLoadedSearch = false;
+  List get searchResult => [..._searchResult];
+  List get trendingArticles => [..._trendingArticles];
+  bool get isLoadedTrending => _isLoadedTrending;
+  bool get isLoadedSearch => _isLoadedSearch;
   String get searchString => _searchString;
 
-  load(String searchString) {
-    reset();
-    _searchString = searchString;
+  loadTrending() {
+    resetTreding();
     notifyListeners();
-    API().request(searchString).then((value) {
+    API().request('Trending').then((value) {
       if (value['status'] == 'ok') {
-        _isLoaded = true;
-        _articles = value['articles'];
+        _isLoadedTrending = true;
+        _trendingArticles = value['articles'];
         notifyListeners();
       }
     });
   }
 
-  reset() {
-    _articles.clear();
-    _isLoaded = false;
+  searchNews(String searchString) {
+    resetSearching();
+    _searchString = searchString;
+    notifyListeners();
+    API().request(searchString).then((value) {
+      if (value['status'] == 'ok') {
+        _isLoadedSearch = true;
+        _searchResult = value['articles'];
+        notifyListeners();
+      }
+    });
+  }
+
+  resetTreding() {
+    _trendingArticles.clear();
+    _isLoadedTrending = false;
+    notifyListeners();
+  }
+
+  resetSearching() {
+    _searchResult.clear();
+    _isLoadedSearch = false;
     notifyListeners();
   }
 }

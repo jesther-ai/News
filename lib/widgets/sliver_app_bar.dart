@@ -132,7 +132,7 @@ class NewsSliverAppBar extends StatelessWidget {
                                                 child: SizedBox(
                                                   width: screenSize.width * 0.60,
                                                   child: Text(
-                                                    value.data.isEmpty ? 'Fetching...' : value.data[0]['title'],
+                                                    value.trendingArticles.isEmpty ? 'Fetching...' : value.trendingArticles[0]['title'],
                                                     maxLines: 1,
                                                     overflow: TextOverflow.ellipsis,
                                                     style: const TextStyle(
@@ -151,9 +151,9 @@ class NewsSliverAppBar extends StatelessWidget {
                                       : const SizedBox(),
                                 ],
                               ),
-                              background: value.data.isNotEmpty
+                              background: value.trendingArticles.isNotEmpty
                                   ? Hero(
-                                      tag: value.data[0]['urlToImage'],
+                                      tag: value.trendingArticles[0]['urlToImage'],
                                       transitionOnUserGestures: true,
                                       child: FadeInImage.assetNetwork(
                                         fadeInCurve: Curves.easeInQuart,
@@ -165,7 +165,7 @@ class NewsSliverAppBar extends StatelessWidget {
                                         height: 150,
                                         placeholderFit: BoxFit.cover,
                                         placeholder: 'assets/images/loader1.gif',
-                                        image: value.data[0]['urlToImage'],
+                                        image: value.trendingArticles[0]['urlToImage'],
                                       ),
                                     )
                                   : const SizedBox(),
