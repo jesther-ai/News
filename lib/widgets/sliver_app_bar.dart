@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Utilities/hex_color.dart';
+import 'package:news_app/widgets/favorite_button.dart';
 
 // ignore: must_be_immutable
 class NewsSliverAppBar extends StatelessWidget {
   NewsSliverAppBar({
     Key? key,
+    // required this.title,
     required this.body,
     this.drawer,
-    this.imageUrl,
+    // this.imageUrl,
     required this.footer,
   }) : super(key: key);
-
+  // final String title;
   final Widget body;
   final Widget footer;
   final Widget? drawer;
-  final String? imageUrl;
-
+  // final String? imageUrl;
   var top = 0.0;
+
   bool scrolled = false;
 
   @override
@@ -39,10 +41,7 @@ class NewsSliverAppBar extends StatelessWidget {
                       floating: false,
                       pinned: true,
                       flexibleSpace: LayoutBuilder(
-                        builder: (
-                          BuildContext context,
-                          BoxConstraints constraints,
-                        ) {
+                        builder: (BuildContext context, BoxConstraints constraints) {
                           top = constraints.biggest.height;
                           scrolled = (top == navBarHeight);
                           return FlexibleSpaceBar(
@@ -53,59 +52,84 @@ class NewsSliverAppBar extends StatelessWidget {
                               clipBehavior: Clip.none,
                               alignment: Alignment.bottomLeft,
                               children: [
-                                Container(
+                                AnimatedContainer(
+                                  duration: const Duration(milliseconds: 500),
                                   decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: HexColor('#8855d7'),
-                                        spreadRadius: 50,
-                                        blurRadius: 150,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
+                                    boxShadow: (top == navBarHeight)
+                                        ? []
+                                        : [
+                                            BoxShadow(
+                                              color: HexColor('#8855d7'),
+                                              spreadRadius: 50,
+                                              blurRadius: 150,
+                                              offset: const Offset(0, 2),
+                                            ),
+                                          ],
                                     color: Colors.white,
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(65),
                                     ),
                                   ),
                                   padding: const EdgeInsets.only(left: 20, right: 20),
-                                  height: (top == navBarHeight) ? 45 : 45,
+                                  height: (top == navBarHeight) ? 0 : 45,
                                 ),
-                                Positioned(
-                                  left: 30,
-                                  bottom: 30,
-                                  child: FavoriteButton(
-                                    iconData: Icons.favorite_border_rounded,
-                                    iconColor: HexColor('#8855d7'),
-                                    buttonColor: Colors.white,
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 70,
-                                  bottom: 30,
-                                  child: FavoriteButton(
-                                    iconData: Icons.bookmark_border,
-                                    iconColor: Colors.white,
-                                    buttonColor: HexColor('#8855d7'),
-                                  ),
-                                ),
+                                // top != navBarHeight
+                                //     ? Positioned(
+                                //         right: 20,
+                                //         bottom: 35,
+                                //         child: FavoriteButton(
+                                //           iconData: Icons.favorite_border_rounded,
+                                //           iconColor: HexColor('#8855d7'),
+                                //           buttonColor: Colors.white,
+                                //         ),
+                                //       )
+                                //     : const SizedBox(),
+                                // top != navBarHeight
+                                //     ? Positioned(
+                                //         right: 55,
+                                //         bottom: 35,
+                                //         child: FavoriteButton(
+                                //           iconData: Icons.bookmark_border,
+                                //           iconColor: Colors.white,
+                                //           buttonColor: HexColor('#8855d7'),
+                                //         ),
+                                //       )
+                                //     : const SizedBox(),
+                                top != navBarHeight
+                                    ? Positioned(
+                                        left: 10,
+                                        bottom: 5,
+                                        child: SizedBox(
+                                          width: screenSize.width * 0.60,
+                                          child: const Text(
+                                            'Bitcoin less green since China ban, research suggests',
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontWeight: FontWeight.w700,
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: 15,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
                               ],
                             ),
                             background: Hero(
-                              tag: imageUrl!,
+                              tag: 'https://ichef.bbci.co.uk/news/1024/branded_news/17EC7/production/_123419979_coalplantgettyimages-948004144.jpg'!,
                               transitionOnUserGestures: true,
                               child: Image.network(
-                                imageUrl!,
+                                'https://ichef.bbci.co.uk/news/1024/branded_news/17EC7/production/_123419979_coalplantgettyimages-948004144.jpg'!,
                                 fit: BoxFit.cover,
                               ),
                             ),
                           );
                         },
                       ),
-                      backgroundColor: HexColor('#DBF9FF'),
-                      iconTheme: const IconThemeData(
-                        color: Colors.black, //change your color here
-                      ),
+                      backgroundColor: HexColor('#8855d7'),
+                      iconTheme: const IconThemeData(color: Colors.black),
                     ),
                   ];
                 },
@@ -151,37 +175,6 @@ class NewsSliverAppBar extends StatelessWidget {
           data: MediaQuery.of(context).copyWith(textScaleFactor: 0.95),
         );
       },
-    );
-  }
-}
-
-class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({
-    required this.iconData,
-    required this.buttonColor,
-    required this.iconColor,
-    Key? key,
-  }) : super(key: key);
-  final Color iconColor;
-  final Color buttonColor;
-  final IconData iconData;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 30,
-      decoration: BoxDecoration(
-        color: buttonColor,
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: IconButton(
-        onPressed: () {},
-        icon: Icon(
-          iconData,
-          color: iconColor,
-          size: 15,
-        ),
-      ),
     );
   }
 }

@@ -13,8 +13,8 @@ class HomeFooter extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black45,
-            spreadRadius: 2,
-            blurRadius: 5,
+            spreadRadius: 1,
+            blurRadius: 10,
             offset: Offset(0, 3),
           ),
         ],
@@ -51,7 +51,8 @@ class HomeFooter extends StatelessWidget {
           isScrollable: true,
           tabs: const [
             Tab(child: Text('Account'), icon: Icon(Icons.person_outline)),
-            Tab(child: Text('Home'), icon: Icon(Icons.home)),
+            Tab(child: Text('Hot'), icon: Icon(Icons.trending_up)),
+            Tab(child: Text('List'), icon: Icon(Icons.menu)),
             Tab(child: Text('Favorites'), icon: Icon(Icons.favorite_border_rounded)),
           ],
         ),
