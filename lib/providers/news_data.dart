@@ -8,18 +8,18 @@ class News with ChangeNotifier {
   List<dynamic> _searchResult = [];
   List<dynamic> _trendingArticles = [];
   bool _isLoadedTrending = false;
-  bool _isLoadedSearch = false;
+  bool _isLoadingSearch = false;
   List get searchResult => [..._searchResult];
   List get trendingArticles => [..._trendingArticles];
   bool get isLoadedTrending => _isLoadedTrending;
-  bool get isLoadedSearch => _isLoadedSearch;
+  bool get isLoadingSearch => _isLoadingSearch;
   String get searchTitle => _searchTitle;
   String get trendingTitle => _trendingTitle;
   loadTrending() {
     resetTreding();
     API().request('Ukraine').then((value) {
       if (value['status'] == 'ok') {
-        _trendingTitle = 'Ukraine';
+        _trendingTitle = 'Ukraine'.toUpperCase();
         _isLoadedTrending = true;
         _trendingArticles = value['articles'];
         notifyListeners();
@@ -31,8 +31,8 @@ class News with ChangeNotifier {
     resetSearching();
     API().request(searchString).then((value) {
       if (value['status'] == 'ok') {
-        _searchTitle = searchString;
-        _isLoadedSearch = true;
+        _searchTitle = searchString.toUpperCase();
+        _isLoadingSearch = false;
         _searchResult = value['articles'];
         notifyListeners();
       }
@@ -47,7 +47,7 @@ class News with ChangeNotifier {
 
   resetSearching() {
     _searchResult.clear();
-    _isLoadedSearch = false;
+    _isLoadingSearch = true;
     notifyListeners();
   }
 }

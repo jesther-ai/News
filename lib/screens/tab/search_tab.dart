@@ -18,7 +18,7 @@ class SearchTab extends StatelessWidget {
       child: SingleChildScrollView(
         child: Consumer<News>(
           builder: (context, value, child) {
-            return value.isLoadedSearch
+            return value.searchResult.isNotEmpty
                 ? AnimationConfiguration.staggeredList(
                     position: 1,
                     duration: const Duration(milliseconds: 1000),
@@ -49,7 +49,7 @@ class SearchTab extends StatelessWidget {
                       ),
                     ),
                   )
-                : value.searchResult.isEmpty
+                : !value.isLoadingSearch
                     ? Center(
                         child: SizedBox(
                           height: 450,
