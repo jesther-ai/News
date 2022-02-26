@@ -125,9 +125,17 @@ class NewsSliverAppBar extends StatelessWidget {
                                   ? Hero(
                                       tag: value.data[0]['urlToImage'],
                                       transitionOnUserGestures: true,
-                                      child: Image.network(
-                                        value.data[0]['urlToImage'],
+                                      child: FadeInImage.assetNetwork(
+                                        fadeInCurve: Curves.easeInQuart,
+                                        fadeOutCurve: Curves.easeInQuart,
+                                        fadeOutDuration: const Duration(milliseconds: 1000),
+                                        fadeInDuration: const Duration(milliseconds: 200),
                                         fit: BoxFit.cover,
+                                        width: 110,
+                                        height: 150,
+                                        placeholderFit: BoxFit.cover,
+                                        placeholder: 'assets/images/loader1.gif',
+                                        image: value.data[0]['urlToImage'],
                                       ),
                                     )
                                   : const SizedBox(),

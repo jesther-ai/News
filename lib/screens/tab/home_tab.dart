@@ -110,7 +110,7 @@ class HomeTab extends StatelessWidget {
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 500), () {
       News news = Provider.of<News>(context, listen: false);
-      if (!news.isLoaded) news.load('Ukraine');
+      if (!news.isLoaded) news.load('Crypto');
     });
   }
 }
