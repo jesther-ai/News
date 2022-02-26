@@ -1,7 +1,7 @@
 # news_app
-![Alt text](/news_app/assets/images/sample2.png?raw=true "Banner")<br>
-<img src="/news_app/assets/images/sample.gif?raw=true" width="222" height="480">
-<img src="/news_app/assets/images/sample1.gif?raw=true" width="222" height="480"><br><br>
+![Alt text](/assets/images/sample2.png?raw=true "Banner")<br>
+<img src="assets/images/sample.gif?raw=true" width="222" height="480">
+<img src="assets/images/sample1.gif?raw=true" width="222" height="480"><br><br>
 A new Flutter project.
 
 ## Getting Started
