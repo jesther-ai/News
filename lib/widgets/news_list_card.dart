@@ -65,7 +65,7 @@ class NewsListCard extends StatelessWidget {
                   width: 110,
                   height: 150,
                   placeholderFit: BoxFit.cover,
-                  placeholder: 'assets/images/loader1.gif',
+                  placeholder: 'assets/images/loader.gif',
                   image: image,
                 ),
               ),

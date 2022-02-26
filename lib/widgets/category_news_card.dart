@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/Utilities/hex_color.dart';
 
 class CategoryNews extends StatelessWidget {
   const CategoryNews({
@@ -9,9 +10,9 @@ class CategoryNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        color: setColor(categoryName),
+        borderRadius: const BorderRadius.all(
           Radius.circular(65),
         ),
       ),
@@ -31,5 +32,25 @@ class CategoryNews extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color setColor(String categoryName) {
+    if (categoryName.toLowerCase().contains('hack')) {
+      return HexColor('#e7d5fc').withOpacity(0.5);
+    }
+    if (categoryName.toLowerCase().contains('wired')) {
+      return HexColor('#aafeff').withOpacity(0.5);
+    }
+    if (categoryName.toLowerCase().contains('blog')) {
+      return HexColor('#e0ddd3').withOpacity(0.5);
+    }
+    if (categoryName.toLowerCase().contains('news')) {
+      return HexColor('#aafefe').withOpacity(0.5);
+    }
+    if (categoryName.toLowerCase().contains('time')) {
+      return HexColor('#063970').withOpacity(0.4);
+    } else {
+      return HexColor('#c2bbcb').withOpacity(0.5);
+    }
   }
 }
