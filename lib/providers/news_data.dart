@@ -17,9 +17,9 @@ class News with ChangeNotifier {
   String get trendingTitle => _trendingTitle;
   loadTrending() {
     resetTreding();
-    API().request('Ukraine').then((value) {
+    API().request('facebook').then((value) {
       if (value['status'] == 'ok') {
-        _trendingTitle = 'Ukraine'.toUpperCase();
+        _trendingTitle = 'facebook'.toUpperCase();
         _isLoadedTrending = true;
         _trendingArticles = value['articles'];
         notifyListeners();

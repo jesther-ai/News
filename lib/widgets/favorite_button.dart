@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/Utilities/hex_color.dart';
 
 class FavoriteButton extends StatelessWidget {
   const FavoriteButton({
@@ -22,12 +23,12 @@ class FavoriteButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: buttonColor,
           borderRadius: BorderRadius.circular(25),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              spreadRadius: 0.5,
-              blurRadius: 1,
-              offset: Offset(0, 3),
+              color: HexColor('#8855d7'),
+              spreadRadius: 3,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:news_app/Utilities/dialog.dart';
 import 'package:news_app/Utilities/hex_color.dart';
 import 'package:news_app/providers/news_data.dart';
 import 'package:news_app/providers/selected_tab.dart';
@@ -48,7 +49,13 @@ class NewsSliverAppBar extends StatelessWidget {
                           expandedHeight: selectedTab.tabIndex != 2 ? screenSize.height * 0.35 : screenSize.height * 0.15,
                           floating: false,
                           pinned: true,
-                          title: selectedTab.tabIndex != 2 ? Center(child: Text(value.trendingTitle)) : Center(child: Text(value.searchTitle)),
+                          title: selectedTab.tabIndex != 2
+                              ? Center(
+                                  child: HomeTitle(
+                                    trendingTitle: value.trendingTitle,
+                                  ),
+                                )
+                              : Center(child: Text(value.searchTitle)),
                           flexibleSpace: LayoutBuilder(
                             builder: (BuildContext context, BoxConstraints constraints) {
                               top = constraints.biggest.height;
@@ -82,38 +89,6 @@ class NewsSliverAppBar extends StatelessWidget {
                                       padding: const EdgeInsets.only(left: 20, right: 20),
                                       height: (top == navBarHeight) ? 0 : 45,
                                     ),
-                                    selectedTab.tabIndex != 2 && top != navBarHeight
-                                        ? Positioned(
-                                            right: 20,
-                                            bottom: 35,
-                                            child: AnimationConfiguration.staggeredList(
-                                              position: 0,
-                                              duration: const Duration(milliseconds: 1000),
-                                              child: FadeInAnimation(
-                                                child: SlideAnimation(
-                                                  verticalOffset: 100,
-                                                  child: FavoriteButton(iconData: Icons.favorite_border_rounded, iconColor: HexColor('#8855d7'), buttonColor: Colors.white, onTap: () {}),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-                                    selectedTab.tabIndex != 2 && top != navBarHeight
-                                        ? Positioned(
-                                            right: 55,
-                                            bottom: 35,
-                                            child: AnimationConfiguration.staggeredList(
-                                              position: 0,
-                                              duration: const Duration(milliseconds: 1000),
-                                              child: FadeInAnimation(
-                                                child: SlideAnimation(
-                                                  verticalOffset: 100,
-                                                  child: FavoriteButton(iconData: Icons.bookmark_border, iconColor: Colors.white, buttonColor: HexColor('#8855d7'), onTap: () {}),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        : const SizedBox(),
                                     selectedTab.tabIndex != 2 && top != navBarHeight
                                         ? Positioned(
                                             left: 10,
@@ -257,6 +232,31 @@ class NewsSliverAppBar extends StatelessWidget {
           data: MediaQuery.of(context).copyWith(textScaleFactor: 0.95),
         );
       },
+    );
+  }
+}
+
+class HomeTitle extends StatelessWidget {
+  const HomeTitle({
+    required this.trendingTitle,
+    Key? key,
+  }) : super(key: key);
+  final String trendingTitle;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(trendingTitle),
+        const SizedBox(width: 55),
+        Row(
+          children: [
+            FavoriteButton(iconData: Icons.bookmark_border, iconColor: Colors.white, buttonColor: HexColor('#8855d7'), onTap: () {}),
+            const SizedBox(width: 20),
+            FavoriteButton(iconData: Icons.filter_alt_outlined, iconColor: HexColor('#8855d7'), buttonColor: Colors.white, onTap: () => filterDialog(context)),
+          ],
+        ),
+      ],
     );
   }
 }
