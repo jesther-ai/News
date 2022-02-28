@@ -20,15 +20,13 @@ filterDialog(context) {
             contentPadding: const EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 15),
             actionsPadding: const EdgeInsets.only(bottom: 10),
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20.0),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
             backgroundColor: Colors.white,
             content: AnimatedContainer(
               duration: const Duration(milliseconds: 50),
               width: MediaQuery.of(context).size.width,
-              height: 40,
+              height: 350,
               color: Colors.white,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,11 +41,24 @@ filterDialog(context) {
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.normal,
                         fontSize: 18,
-                        color: HexColor('#006B83'),
+                        color: HexColor('#8855d7'),
                       ),
                     ),
                   ),
                   const SizedBox(width: 20),
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: HexColor('#8855d7'),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: const Icon(
+                      Icons.filter_alt_outlined,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                  ),
                 ],
               ),
             ),
