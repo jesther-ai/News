@@ -92,11 +92,7 @@ class NewsSliverAppBar extends StatelessWidget {
                                               child: FadeInAnimation(
                                                 child: SlideAnimation(
                                                   verticalOffset: 100,
-                                                  child: FavoriteButton(
-                                                    iconData: Icons.favorite_border_rounded,
-                                                    iconColor: HexColor('#8855d7'),
-                                                    buttonColor: Colors.white,
-                                                  ),
+                                                  child: FavoriteButton(iconData: Icons.favorite_border_rounded, iconColor: HexColor('#8855d7'), buttonColor: Colors.white, onTap: () {}),
                                                 ),
                                               ),
                                             ),
@@ -112,11 +108,7 @@ class NewsSliverAppBar extends StatelessWidget {
                                               child: FadeInAnimation(
                                                 child: SlideAnimation(
                                                   verticalOffset: 100,
-                                                  child: FavoriteButton(
-                                                    iconData: Icons.bookmark_border,
-                                                    iconColor: Colors.white,
-                                                    buttonColor: HexColor('#8855d7'),
-                                                  ),
+                                                  child: FavoriteButton(iconData: Icons.bookmark_border, iconColor: Colors.white, buttonColor: HexColor('#8855d7'), onTap: () {}),
                                                 ),
                                               ),
                                             ),
